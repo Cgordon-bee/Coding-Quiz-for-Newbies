@@ -2,18 +2,25 @@
 
 
 // Creation of Variables
-var quizContainer = document.getElementById ('quiz');
+var quizContainer = document.getElementById ('questions');
 var quizResults = document.getElementById ('results');
-var startbutton = document.getElementById ('start');
+var start = document.getElementById ('startButton');
+var highscore = document.getElementById ("highscore");
+var questionTitle = document.getElementById ("questionTitle");
+var questionOptions = document.getElementById ("options");
+var intro = document.getElementById ("intro")
 var timeEl = document.getElementById('timer');
 var timerForClock = 75;
 var score = 0;
+var currentQuestion = 0;
+
+
+// List of questions also known objects 
 var questions = [  {
     prompt: "Inside which HTML element do we put the JavaScript?",
     options: ["a. <js>", "b. <javascript>", "c. <scripting>", "d. <script>"],
     answer: "d. <script>",
 }
-
 ,
 {
     prompt: "String values must be enclosed within _____ when being assigned to variables.",
@@ -73,10 +80,47 @@ var questions = [  {
 
 ];
 
-// the arguments - defining the rule of for loop
+/*the arguments - defining the rule of for loop
 for(var i=0; i < questions.length ; i++) {}
+*/
+
+//where do I start the function?
+
+function timeSet(){
+    var quizCountdown = setInterval(function(){
+        timeEl.innerText = "Timer:" + timerForClock--
+        if (timerForClock === 0) {
+        
+          clearInterval(quizCountdown);
+        }
+      }, 1000);
 
 
+
+    }
+// this is how I will change the display of html element
+function display (){
+intro.style.display ="none"
+
+
+var question= questions[currentQuestion]
+
+//this will return a object where we will assign to a variable.
+questionTitle.textContent=question.prompt
+for(var i=0; i < question.options.length ; i++) {
+var button =document.createElement("button")
+button.innerText=question.options[i]
+questionOptions.append(button)
+}
+
+
+
+
+
+
+
+}
+/*
 var results = window.prompt (questions [i.prompt])
 if(response == questions [i]. answer){
     score++;
@@ -87,25 +131,18 @@ if(response == questions [i]. answer){
     alert ("incorrect!");
 }
 {   alert ("you've got " + score + "/" + questions.length);
+*/
 
 
-}
 
-function timeSet(){
-    var quizCountdown = setInterval(function(){
-        timeEl.innerText = "Timer:" + timerForClock--
-        if (timerForClock === 0) {
-        
-          clearInterval(quizCountdown);
-        }
-      }, 1000);
-}
+
+
 // This section will be for the actual functions /scripts to be run
 
 function startTheQuiz(){
     timeSet()
 
-    
+    display()
 
 
 
@@ -113,5 +150,4 @@ function startTheQuiz(){
 }
 
 // function to handle eventListener 
-startButton.addEventListener ("click", startTheQuiz) 
-
+start.addEventListener ("click", startTheQuiz);
